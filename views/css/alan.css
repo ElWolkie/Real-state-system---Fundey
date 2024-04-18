@@ -10,6 +10,7 @@ body {
 	justify-content: center;
 	align-items: center;
     background-repeat: no-repeat;
+	background-position: center center;
     background-attachment: fixed;
     background-size:cover;
 	flex-direction: column;
@@ -163,8 +164,8 @@ input {
 
 .overlay {
 	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to right, #FF4B2B, #FF416C);
+	background: -webkit-linear-gradient(to right, #FF4B2B, #e3e1ff);
+	background: linear-gradient(to right, #ffb4b4, #ff5555, rgb(224, 18, 18));
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
