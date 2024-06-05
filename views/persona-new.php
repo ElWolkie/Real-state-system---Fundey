@@ -60,22 +60,22 @@
             <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
             &nbsp; &nbsp;
             <input type="hidden" name="enviar" value="1">
-            <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp;Enviar</button>
+            <button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; ENVIAR</button>
         </p>
     </form>
 </div>
 </b>
 
 <script>
-    //Funcion de 4 digitos Telefono
-    function formatTelefono(input) {
-    var num = input.value.replace(/\D/g,'');
-    if(num.length > 4) {
-        input.value = num.substring(0,4) + '-' + num.substring(4);
-    } else {
-        input.value = num;
+        //Funcion de 4 digitos Telefono
+        function formatTelefono(input) {
+        var num = input.value.replace(/\D/g,'');
+        if(num.length > 4) {
+            input.value = num.substring(0,4) + '-' + num.substring(4);
+        } else {
+            input.value = num;
+        }
     }
-}
 
 	document.getElementById('registroPersona').addEventListener('submit', function(event) {
     // Obtén los elementos de los campos de entrada
@@ -124,5 +124,5 @@
             direccion.focus(); // Enfoca el campo direccion después de que se cierre el alerta
         });
     }
-});
+    });
 </script>

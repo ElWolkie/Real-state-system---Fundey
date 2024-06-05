@@ -16,7 +16,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="img/logo_fundey.png">
 	  <script src="https://kit.fontawesome.com/1da90de8c0.js" crossorigin="anonymous"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 	<title>Usuario</title>
 
@@ -105,35 +106,151 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 					<li>
 						<a href="user-list.php" style="font-size: 18px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight:bold"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
 					</li>
+				<!--
 					<li>
 						<a href="user-search.php" style="font-size: 18px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight:bold"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR USUARIO</a>
 					</li>
+				-->
 				</ul>	
 			</div>
 
-			<script>
-                $(document).ready(function(){
-                $('ul.page-nav-tabs a').click(function(e){
-                    e.preventDefault(); // Evita que el enlace se abra en una nueva página
-                    var url = $(this).attr('href'); // Obtiene la URL del enlace
+	<script>
+           $('ul.page-nav-tabs a').click(function(e){
+                e.preventDefault();
+                var url = $(this).attr('href');
 
-                    $('#contenido').hide().load(url, function() {
-                        $(this).fadeIn('slow'); // Hace que el contenido aparezca gradualmente
+                $('#contenido').hide().load(url, function() {
+                    $(this).fadeIn('slow');
+                    //REGISTRO
+                    $(document).ready(function() {
+                        $('#registroUsuario').submit(function(e) {
+                            e.preventDefault();
+
+                            $.post('../controller/ctl_usuario.php', $(this).serialize(), function(response) {
+                                if (response.hasOwnProperty('error')) {
+                                    // Si hay un error, muestra un mensaje de error con SweetAlert
+                                    swal("Error!", "La cédula no está registrada en 'Persona' " + response.error, "error");
+                                } else if (response.hasOwnProperty('success')) {
+                                    // Si no hay errores, muestra un mensaje de éxito con SweetAlert
+                                    swal("¡Éxito!", "Usuario registrado con éxito", "success");
+                                    $('#registroUsuario')[0].reset(); // Limpia el formulario
+                                }
+                            }, 'json');
+                        });
                     });
+                    //LISTA
+                    if (url == 'user-list.php') {
+                        // Muestra el cuadro de búsqueda gradualmente
+                        $('#search-box').fadeIn('slow');
 
-                    $('ul.page-nav-tabs a').removeClass('active'); // Quita la clase 'active' de todos los enlaces
-                    $(this).addClass('active'); // Añade la clase 'active' al enlace en el que se hizo clic
+                        $.getJSON('../model/obtener_usuarios.php', function(usuarios) {
+                            var html = '';
+                            for (var i = 0; i < usuarios.length; i++) {
+                                html += '<tr class="text-center">';
+                                html += '<td>' + (i + 1) + '</td>'; // Aquí usamos 'i + 1' para el conteo
+                                html += '<th>' + usuarios[i].cedula + '</th>';
+                                html += '<th>' + usuarios[i].username + '</th>';
+                                html += '<th>' + usuarios[i].correo + '</th>';
+                                html += '<th>' + usuarios[i].privilegio + '</th>';
+                                html += '<th>' + usuarios[i].estatus + '</th>';
+                                html += '<td><a href="#" class="btn btn-success"><i class="fas fa-sync-alt"></i></a></td>';
+                                html += '<td><form action=""><button type="button" class="btn btn-warning"><i class="far fa-trash-alt"></i></button></form></td>';
+                                html += '</tr>';
+                            }
+                            $('#contenido table tbody').html(html);
+
+                            //BUSQUEDA
+                            $('#search').on('keyup', function() {
+                                var value = $(this).val().toLowerCase();
+                                $('#contenido table tbody tr').filter(function() {
+                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                });
+                            });
+                        });
+                    } else {
+                        // Oculta el cuadro de búsqueda gradualmente
+                        $('#search-box').fadeOut('slow');
+                    }
                 });
+
+                $('ul.page-nav-tabs a').removeClass('active');
+                $(this).addClass('active');
             });
 
-            $(document).ready(function(){
-                $(document).on('click', '.btn-success', function(e){
-                    e.preventDefault(); // Evita que el enlace se abra en una nueva página
+        	$(document).on('click', '.btn-success', function(e){
+                e.preventDefault(); // Evita que el enlace se abra en una nueva página
 
-                    $('#modal').modal('show'); // Abre la ventana modal
+                var fila = $(this).closest('tr'); // Obtiene la fila de la tabla que contiene el botón en el que se hizo clic
+                var cedula = fila.find('th:eq(0)').text(); // Obtiene la cédula de la persona de la fila
+
+                // Realiza una solicitud AJAX para obtener los datos de la persona con esta cédula
+                $.getJSON('../model/obtener_usuario_por_cedula.php', { cedula: cedula }, function(usuarios) {
+                    // Usa los datos de 'persona' para rellenar los campos del formulario en la ventana modal
+                    $('#modal #cedula').val(usuarios.cedula);
+                    $('#modal #username').val(usuarios.username);
+                    $('#modal #password').val(usuarios.password);
+                    $('#modal #correo').val(usuarios.correo);
+                    $('#modal #privilegio').val(usuarios.privilegio);
+                    $('#modal #estatus').val(usuarios.estatus);
+                });
+
+                $('#modal').modal('show'); // Abre la ventana modal
+                
+                $(document).on('submit', '#modal #miFormulario', function(e) {
+					e.preventDefault(); // Evita que el formulario se envíe de la forma predeterminada
+
+					// Realiza una solicitud AJAX para actualizar los datos del usuario
+					$.post('../controller/actualizar_usuario.php', $(this).serialize(), function(response) {
+
+						// Verifica la respuesta de la solicitud AJAX
+						if (response.error) {
+							// Si hay un error, muestra un mensaje de error
+							alert('Error al actualizar el usuario: ' + response.error);
+						} else {
+							// Si no hay errores, cierra la ventana modal y actualiza la tabla
+							$('#modal').modal('hide');
+							swal("Usuario Actualizado!", "Se actualizaron los datos correctamente!", "success");
+						}
+					}, 'json'); // Respuesta JSON
+				});
+        	});
+            $(document).on('click', '.btn-warning', function(e){
+                e.preventDefault();
+
+                var fila = $(this).closest('tr');
+                var cedula = fila.find('th:eq(0)').text();
+
+                swal({
+                    title: "¿Estás seguro que deseas eliminarlo?",
+                    text: "Una vez eliminado, no podrás recuperar esta fila!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.post('../controller/eliminar_usuario.php', { cedula: cedula })
+                            .done(function() {
+                                fila.remove();
+                                swal("¡El Usuario ha sido eliminado!", {
+                                    icon: "success",
+                                });
+                            })
+                            .fail(function() {
+                                swal("¡Hubo un error al eliminar la fila!", {
+                                    icon: "error",
+                                });
+                            });
+                    } else {
+                        swal("¡Tu fila está a salvo!");
+                    }
                 });
             });
-			</script>
+    </script>
+
+			<div id="search-box" style="text-align: right; display:none; padding: 15px;">
+                <i class="fas fa-search fa-fw" style="padding-right: 8px;"></i><input type="text" id="search" placeholder="Buscar..." style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; width: 200px;">
+            </div>
 
 			<div id="contenido">
 				<!--Se imprimen el contenido de los enlaces -->
@@ -167,110 +284,91 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-    
+  <!-- Ventana Modal de Actualizar Datos -->      
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-	  <h3 class="modal-title" id="modalLabel" style="font-weight: bold;">Actualizar Usuario</h3>
+        <h3 class="modal-title" id="modalLabel" style="font-weight: bold;">Actualizar Usuario</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true"></span>
         </button>
       </div>
-    <div class="modal-body">
-    <div class="container-fluid">
-	<form action="" class="form-neon" autocomplete="off">
-		<fieldset>
-			<b><legend><i class="far fa-address-card"></i> &nbsp; Información del Usuario</legend></b><br>
-			<b><div class="container-fluid">
-            <form action="" class="form-neon" autocomplete="off">
-					<br>
-					<fieldset>
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-12 col-md-6">
-									<div class="form-group">
-										<label for="usuario_usuario" class="bmd-label-floating">Nombre de usuario</label>
-										<input type="text" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario" id="usuario_usuario" maxlength="20" required>
-									</div>
-								</div>
-								<div class="col-12 col-md-6">
-									<div class="form-group">
-										<label for="usuario_email" class="bmd-label-floating">Email</label>
-										<input type="email" class="form-control" name="usuario_email" id="usuario_email" maxlength="30" required>
-									</div>
-								</div>
-								<div class="col-12">
-									<legend style="margin-top: 40px;"><i class="fas fa-lock"></i> &nbsp; Nueva contraseña</legend>
-									<p>Para actualizar la contraseña de esta cuenta ingrese una nueva y vuelva a escribirla. En caso que no desee actualizarla debe dejar vacíos los dos campos de las contraseñas.</p>
-								</div>
-								<div class="col-12 col-md-6">
-									<div class="form-group">
-										<label for="usuario_clave_nueva_1" class="bmd-label-floating">Contraseña</label>
-										<input type="password" class="form-control" name="usuario_clave_nueva_1" id="usuario_clave_nueva_1" maxlength="20">
-									</div>
-								</div>
-								<div class="col-12 col-md-6">
-									<div class="form-group">
-										<label for="usuario_clave_nueva_2" class="bmd-label-floating">Repetir contraseña</label>
-										<input type="password" class="form-control" name="usuario_clave_nueva_2" id="usuario_clave_nueva_2" maxlength="20">
-									</div>
-								</div>
+      <form class="form-neon" autocomplete="off" method="POST" id="miFormulario">
+		<legend><i class="fas fa-user-lock"></i> &nbsp; Información de la cuenta</legend>
+			<div class="container-fluid">
+					<div class="row">
+						<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label for="cedula" class="bmd-label-floating">Cédula:</label>
+								<input type="text" pattern="[0-9-]{1,20} /^[0-9]+$/" class="form-control" name="cedula" id="cedula" maxlength="8"
+								oninput="return (event.target.value = event.target.value.replace(/[^0-9]/g, ''))" readonly style="background-color: #f9f9f9; border-radius:5px; padding:5px;">
 							</div>
 						</div>
-					</fieldset>
-					<br>
-					<fieldset>
-						<legend><i class="fas fa-medal"></i> &nbsp; Nivel de privilegio</legend>
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-12">
-									<p><span class="badge badge-info">Control total</span> Permisos para registrar, actualizar y eliminar</p>
-									<p><span class="badge badge-success">Edición</span> Permisos para registrar y actualizar</p>
-									<p><span class="badge badge-dark">Registrar</span> Solo permisos para registrar</p>
-									<div class="form-group">
-										<select class="form-control" name="usuario_privilegio" required>
-											<option value="" selected="" disabled="">Seleccione una opción</option>
-											<option value="1">Control total</option>
-											<option value="2">Edición</option>
-											<option value="3">Registrar</option>
-										</select>
-									</div>
-								</div>
+						<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label for="username" class="bmd-label-floating">Nombre de usuario:</label>
+								<input type="text" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="username" id="username" maxlength="20">
 							</div>
 						</div>
-					</fieldset>
-					<br>
-					<fieldset>
-						<legend><i class="fas fa-user-check"></i> &nbsp; Estatus</legend>
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-12">
-									<div class="form-group">
-										<select class="form-control" name="usuario_privilegio" required>
-											<option value="" selected="" disabled="">Seleccione una opción</option>
-											<option value="Activo">Activo</option>
-											<option value="Inactivo">Inactivo</option>
-										</select>
-									</div>
-								</div>
+						<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label for="password" class="bmd-label-floating">Contraseña:</label>
+								<input type="password" class="form-control" name="password" id="password" maxlength="20"> 
 							</div>
 						</div>
-					</fieldset>
-				</form>
+						<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label for="correo" class="bmd-label-floating">Correo:</label>
+								<input type="email" class="form-control" name="correo" id="correo" maxlength="30">
+							</div>
+						</div>
+					</div>
 				<br>
-</div>
-</b>
-		</fieldset>
-	</form>
-</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar cambios</button>
-      </div>
+				<fieldset>
+				<legend><i class="fas fa-medal"></i> &nbsp; Nivel de privilegio</legend>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<p><span class="badge badge-info">Coordinador</span> Permisos para registrar, actualizar y eliminar</p>
+							<p><span class="badge badge-success">Asistente</span> Permisos para registrar y actualizar</p>
+							<div class="form-group">
+								<select class="form-control" name="privilegio" id="privilegio" style="background-color: #f9f9f9; border-radius:5px; padding:5px;">
+									<option value="" disabled="">Seleccione una opción</option>
+									<option value="Coordinador">Coordinador</option>
+									<option value="Asistente">Asistente</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				</fieldset>
+				<br>
+				<fieldset>
+				<legend><i class="fas fa-user-check"></i> &nbsp; Estatus</legend>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="form-group">
+								<select class="form-control" name="estatus" id="estatus">
+									<option value="" disabled="">Seleccione una opción</option>
+									<option value="Activo">Activo</option>
+									<option value="Inactivo">Inactivo</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				</fieldset>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="submit" class="btn btn-primary">Guardar cambios</button>
+			</div>
+</form>
     </div>
   </div>
 </div>
+
 </body>
 </html>

@@ -7,26 +7,32 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalItem"><i class="fas fa-box-open"></i> &nbsp; Agregar bien</button>
                         </p>
                         <div>
-                            <span class="roboto-medium">Persona:</span> 
-                            <span class="text-danger">&nbsp; <i class="fas fa-exclamation-triangle"></i> Seleccione una Persona</span>
-                  			<form action="" style="display: inline-block !important;">
-                            	Carlos Alfaro
-                                <button type="button" class="btn btn-danger"><i class="fas fa-user-times"></i></button>
-                            </form>
+                          
                         </div>
                         <div class="table-responsive">
                             <table class="table table-dark table-sm">
                                 <thead>
                                     <tr class="text-center roboto-medium">
-                                        <th>NOMBRE</th>
-                                        <th>CANTIDAD</th>
+                                        <th>RESPONSABLE</th>
+                                        <th>RECURSO</th>
+										<th>CANTIDAD</th>
+										<th>UBICACIÓN</th>
+										<th>FECHA DE RESERVA</th>
+										<th>FECHA DE ENTREGA</th>
+										<th>ESTADO</th>
                                         <th>ELIMINAR</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="text-center" >
-                                        <td>Mallas</td>
-                                        <td>7</td>
+                                        <td>FERNANDO LOPEZ</td>
+                                        <td>balones</td>
+										<td>9</td>
+										<td>concha acustica av ravell</td>
+										<td>12/6/2024</td>
+										<td>13/6/2024</td>
+										<td>pendiente</td>
+									
                                         <td>
                                             <form action="">
                                                 <button type="button" class="btn btn-danger">
@@ -35,17 +41,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                    <tr class="text-center" >
-                                        <td>Balones</td>
-                                        <td>9</td>
-                                        <td>
-                                            <form action="">
-                                                <button type="button" class="btn btn-danger">
-                                                    <i class="far fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                 
                                 </tbody>
                             </table>
                         </div>

@@ -103,12 +103,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <li>
                         <a href="prestamo-list.php" style="font-size: 18px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight:bold"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE PRÉSTAMOS</a>
                     </li>
-                    <li>
-                        <a href="prestamo-search.php" style="font-size: 18px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight:bold"><i class="fas fa-search-dollar fa-fw"></i> &nbsp; BUSCAR PRÉSTAMOS</a>
-                    </li>
-                    <li>
-                        <a href="prestamo-pending.php" style="font-size: 18px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight:bold"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; PRÉSTAMOS PENDIENTES</a>
-                    </li>
                 </ul>
             </div>
 
@@ -142,7 +136,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     });
                 });
             </script>			
-	
+				 <div id="search-box" style="text-align: right; display:none; padding: 15px;">
+               <i class="fas fa-search fa-fw" style="padding-right: 8px;"></i><input type="text" id="search" placeholder="Buscar..." style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; width: 200px;">
+                </div>
             <div id="contenido">
                 <!--Se imprimen el contenido de los enlaces -->
             </div>

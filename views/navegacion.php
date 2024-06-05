@@ -63,7 +63,7 @@
                     </li>
 
                     <li>
-                        <a href="#"><i class="fas fa-biking"></i> &nbsp; Evento Deportivo</a>
+                        <a href="evento_deportivo.php"><i class="fas fa-biking"></i> &nbsp; Evento Deportivo</a>
                     </li>
 
                     <div class="full-box nav-lateral-bar" style="height: 2px;"></div>
@@ -78,7 +78,7 @@
             <a href="#" class="nav-btn-submenu"><i class="	fas fa-cogs"></i> &nbsp; Sistema <i class="fas fa-chevron-down"></i></a>
             <ul>
                 <li>
-                    <a href="#" class="nav-btn-submenu"><i class="fas fa-clipboard-list"></i> &nbsp; Generar Reporte</a>
+                    <a href="reportes.php"><i class="fas fa-clipboard-list"></i> &nbsp; Generar Reporte</a>
                 </li>
                 
                     <a href="#" class="nav-btn-submenu"><i class="fas fa-cog"></i> &nbsp; Opciones <i class="fas fa-chevron-down"></i></a>

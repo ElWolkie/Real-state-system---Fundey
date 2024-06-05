@@ -118,7 +118,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                 $('#contenido').hide().load(url, function() {
                     $(this).fadeIn('slow');
-
+                    //REGISTRO
                     $(document).ready(function() {
                         $('#registroPersona').submit(function(e) {
                             e.preventDefault();
@@ -135,7 +135,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }, 'json');
                         });
                     });
-
+                    //LISTA
                     if (url == 'persona-list.php') {
                         // Muestra el cuadro de búsqueda gradualmente
                         $('#search-box').fadeIn('slow');
@@ -157,7 +157,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             $('#contenido table tbody').html(html);
 
-                            // Aquí agregas el código de búsqueda
+                            //BUSQUEDA
                             $('#search').on('keyup', function() {
                                 var value = $(this).val().toLowerCase();
                                 $('#contenido table tbody tr').filter(function() {
@@ -248,7 +248,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </script>
     
                <div id="search-box" style="text-align: right; display:none; padding: 15px;">
-               <i class="fas fa-search fa-fw" style="padding-right: 8px;"></i><input type="text" id="search" placeholder="Buscar..." style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; width: 200px;">
+                    <i class="fas fa-search fa-fw" style="padding-right: 8px;"></i><input type="text" id="search" placeholder="Buscar..." style="padding: 5px; border-radius: 5px; border: 1px solid #ccc; width: 200px;">
                 </div>
 
             <div id="contenido">
@@ -283,7 +283,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
  <!-- Ventana Modal de Actualizar Datos -->   
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -293,8 +293,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </button>
       </div>
       <form class="form-neon" autocomplete="off" method="POST" id="miFormulario">
-            <div class="modal-body">
-            <div class="container-fluid">
+        <div class="container-fluid">
                 <fieldset>
                 <b><legend><i class="far fa-address-card"></i>   Información personal</legend></b><br>
                 <b><div class="container-fluid">
@@ -354,12 +353,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </div></b>
                 </fieldset>
             </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-            </div>
-      </form>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="submit" class="btn btn-primary">Guardar cambios</button>
+			</div>
+        </form>
     </div>
   </div>
 </div>
