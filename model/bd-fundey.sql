@@ -12,6 +12,7 @@ CREATE TABLE usuario (
 );
 
 INSERT INTO `usuario` (`id`, `cedula`, `username`, `password`, `correo`, `privilegio`, `estatus`) VALUES ('1', '12345678', 'Admin', '20050025admin', 'eladmin@gmail.com', 'Administrador', 'Activo');
+INSERT INTO `usuario` (`id`, `cedula`, `username`, `password`, `correo`, `privilegio`, `estatus`) VALUES ('2', '87654321', 'usuario', '12345', 'elusuario@gmail.com', 'Coordinador', 'Activo');
 
 CREATE TABLE persona (
     id INTEGER NOT NULL AUTO_INCREMENT,
