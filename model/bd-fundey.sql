@@ -15,7 +15,6 @@ INSERT INTO `usuario` (`id`, `cedula`, `username`, `password`, `correo`, `privil
 INSERT INTO `usuario` (`id`, `cedula`, `username`, `password`, `correo`, `privilegio`, `estatus`) VALUES ('2', '87654321', 'usuario', '12345', 'elusuario@gmail.com', 'Coordinador', 'Activo');
 
 CREATE TABLE persona (
-    id INTEGER NOT NULL AUTO_INCREMENT,
     cedula INTEGER (8) NOT NULL PRIMARY KEY,
     nombre VARCHAR(25) NOT NULL,
     apellido VARCHAR(25) NOT NULL,
