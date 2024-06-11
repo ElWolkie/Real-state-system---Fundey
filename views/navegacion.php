@@ -62,10 +62,10 @@
                         <a href="prestamo.php"><i class="fas fa-file-invoice-dollar fa-fw"></i> &nbsp; Préstamos</a>
                     </li>
 
-                    <li>
-                        <a href="evento_deportivo.php"><i class="fas fa-biking"></i> &nbsp; Evento Deportivo</a>
-                    </li>
-
+                    <!-- <li>
+                            <a href="evento_deportivo.php"><i class="fas fa-biking"></i> &nbsp; Evento Deportivo</a>
+                        </li>
+                    -->
                     <div class="full-box nav-lateral-bar" style="height: 2px;"></div>
                     
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> &nbsp;Actualizar Estructura</a>

@@ -1,44 +1,57 @@
-<div class="container-fluid">
+<b><div class="container-fluid">
 	<form action="" class="form-neon" autocomplete="off">
 		<fieldset>
 			<legend><i class="far fa-plus-square"></i> &nbsp; Bien Mueble</legend>
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-12 col-md-4">
+
+					<div class="col-12 col-md-6">
 						<div class="form-group">
-							<label for="codigo" class="label-floating">Código:</label>
-							<input type="text" pattern="[a-zA-Z0-9-]{1,45}" class="form-control" name="codigo" readonly value="<?php $caracteres = '123456789ABC';
+							<label for="cantidad" class="label-floating">Cantidad:</label>
+							<input type="text" pattern="[0-9]{1,9}" class="form-control" name="cantidad" id="cantidad" maxlength="2" oninput="return (event.target.value = event.target.value.replace(/[^0-9]/g, ''))">
+						</div>
+					</div>
+
+					<div class="col-12 col-md-6">
+						<div class="form-group">
+							<label for="codigo" class="label-floating">Código Actual:</label>
+							<input type="text" pattern="[0-9]{1,9}" class="form-control" name="codigo" maxlength="6" oninput="return (event.target.value = event.target.value.replace(/[^0-9]/g, ''))"
+							value="<?php /* $caracteres = '123456789ABC';
 							$aleatoria = substr(str_shuffle($caracteres), 0, 4);
-							echo $aleatoria . "\n"; ?>">
+							echo $aleatoria . "\n"; */ ?>">
 						</div>
 					</div>
 					
-					<div class="col-12 col-md-4">
-						<div class="form-group">
-							<label for="item_nombre" class="label-floating">Nombre:</label>
-							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="item_nombre" id="item_nombre" maxlength="40" required>
-						</div>
-					</div>
-					<div class="col-12 col-md-4">
-						<div class="form-group">
-							<label for="item_stock" class="label-floating">Cantidad:</label>
-							<input type="num" pattern="[0-9]{1,9}" class="form-control" name="item_stock" id="item_stock" maxlength="9" required>
-						</div>
-					</div>
 					<div class="col-12 col-md-6">
 						<div class="form-group">
-							<label for="item_estado" class="label-floating">Estado:</label>
-							<select class="form-control" name="item_estado" id="item_estado" required>
+							<label for="descripcion" class="label-floating">Descripción del Bien:</label>
+							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="descripcion" id="descripcion" maxlength="60">
+						</div>
+					</div>
+					
+					<div class="col-12 col-md-6">
+						<div class="form-group">
+							<label for="estado" class="label-floating">Estado:</label>
+							<select class="form-control" name="estado" id="estado">
 								<option value="" selected="" disabled="">Seleccione una opción</option>
-								<option selected="" value="Habilitado">Habilitado</option>
-								<option value="Deshabilitado">Deshabilitado</option>
+								<option value="Bueno">Bueno</option>
+								<option value="Regular">Regular</option>
+								<option value="Malo">Malo</option>
 							</select>
 						</div>
 					</div>
+
+					<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label for="ubicacion" class="label-floating">Ubicación:</label>
+								<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="ubicacion" id="ubicacion" maxlength="30">
+							</div>
+					</div>
+
 					<div class="col-12 col-md-6">
 						<div class="form-group">
-							<label for="item_detalle" class="label-floating" required>Detalle:</label>
-							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9()- ]{1,190}" class="form-control" name="item_detalle" id="item_detalle" maxlength="150" required>
+							<label for="observacion" class="label-floating">Observacion:</label>
+							<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9()- ]{1,190}" class="form-control" name="observacion" id="observacion" maxlength="50">
 						</div>
 					</div>
 				</div>
@@ -51,12 +64,12 @@
 			<button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
 		</p>
 	</form>
-</div>
+</div></b>
 
 <div class="container-fluid">
 	<form action="" class="form-neon" autocomplete="off">
 		<fieldset>
-			<legend><i class="far fa-plus-square"></i> &nbsp; Bien Inmueble</legend>
+			<legend><i class="far fa-plus-square"></i> &nbsp; Bien Deportivo</legend>
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-12 col-md-4">

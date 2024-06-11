@@ -16,8 +16,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="img/logo_fundey.png">
 	  <script src="https://kit.fontawesome.com/1da90de8c0.js" crossorigin="anonymous"></script>
-      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	  
 
 	<title>Usuario</title>
 
@@ -61,6 +62,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 	<!-- Sweet Alert V8.13.0 JS file-->
 	<script src="./js/sweetalert2.min.js" ></script>
+
+	<!-- Sweet Alert file-->
+    <script src="js/sweetalert.min.js" ></script>
 
 	<!-- jQuery Custom Content Scroller V3.1.5 -->
 	<link rel="stylesheet" href="./css/jquery.mCustomScrollbar.css">
